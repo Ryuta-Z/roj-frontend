@@ -16,8 +16,3 @@ export default defineComponent({
   },
 });
 </script>
-<style>
-.home {
-  height: 100%;
-}
-</style>
