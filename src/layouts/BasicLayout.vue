@@ -28,6 +28,7 @@
 </style>
 <script lang="ts">
 import GlobalHeader from "@/components/GlobalHeader.vue";
+
 export default {
   components: { GlobalHeader },
 };

@@ -10,14 +10,14 @@ export default {
   }),
   getters: {},
   actions: {
-    setLoginUser({ commit }, playload) {
+    async setLoginUser({ commit }, playload) {
       commit("setUserName", playload);
     },
   },
   mutations: {
     setUserName(state, user) {
       state.loginUser.name = user.name;
-      state.loginUser.access = Access.USER;
+      state.loginUser.access = user.access;
     },
   },
 } as StoreOptions<any>;

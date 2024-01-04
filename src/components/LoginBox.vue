@@ -19,6 +19,9 @@
 <script lang="ts">
 import { reactive, ref } from "vue";
 import { useStore } from "vuex";
+import { UserControllerService } from "@/api/services/UserControllerService";
+import { Message } from "@arco-design/web-vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
     const loginVisible = ref(false);
@@ -31,13 +34,23 @@ export default {
     const handleClick = () => {
       loginVisible.value = true;
     };
+    const router = useRouter();
     //请求登录api
     const handleBeforeOk = async () => {
-      store.dispatch("user/setLoginUser", {
-        name: form.name,
-        passwd: form.passwd,
+      const resp = await UserControllerService.userLoginUsingPost({
+        userAccount: form.name,
+        userPassword: form.passwd,
       });
-      loginVisible.value = false;
+      if (resp.code === 0) {
+        store.dispatch("user/setLoginUser", {
+          name: resp.data.userName,
+          access: resp.data.userRole,
+        });
+        Message.success("登录成功");
+        loginVisible.value = false;
+        return true;
+      } else Message.error(resp.message);
+      return false;
     };
     const handleCancel = () => {
       loginVisible.value = false;
