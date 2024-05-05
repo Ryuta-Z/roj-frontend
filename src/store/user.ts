@@ -4,9 +4,11 @@ export default {
   namespaced: true,
   state: () => ({
     loginUser: {
+      id: "",
       name: "未登录",
       access: Access.UN_LOGIN,
     },
+    isDEV: false,
   }),
   getters: {},
   actions: {
@@ -18,6 +20,7 @@ export default {
     setUserName(state, user) {
       state.loginUser.name = user.name;
       state.loginUser.access = user.access;
+      state.loginUser.id = user.id;
     },
   },
 } as StoreOptions<any>;

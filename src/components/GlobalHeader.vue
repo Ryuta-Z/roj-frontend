@@ -26,7 +26,7 @@
       </div>
     </a-col>
   </a-row>
-  <LoginBox ref="loginRef" />
+  <!-- <LoginBox ref="loginRef" /> -->
 </template>
 <style>
 .grid-demo .arco-col {
@@ -53,17 +53,40 @@
 <script setup lang="ts">
 import { routes } from "@/router/routes";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useStore } from "vuex";
-import LoginBox from "@/components/LoginBox.vue";
 import Access from "@/access/Access";
 import { checkAccess } from "@/access/AccessCheck";
+import { UserControllerService } from "@/api/roj-apis/userApi";
 const router = useRouter();
 const store = useStore();
-const selectedKey = ref(["/"]);
-const visibleRoutes = routes.filter((item, index) => {
-  return checkAccess(store.state.user.loginUser, item.meta?.access as string);
-});
+const selectedKey = ref([router.currentRoute.value.path]);
+const visibleRoutes = ref();
+const initUser = async () => {
+  const store = useStore();
+  const resp = await UserControllerService.getLoginUserUsingGet();
+  // const resp = {
+  //   code: 0,
+  //   data: {
+  //     userName: "ryuta",
+  //     userRole: "admin",
+  //   },
+  // };
+  if (resp.code === 0) {
+    store.dispatch("user/setLoginUser", {
+      name: resp.data?.userName,
+      access: resp.data?.userRole,
+      id: resp.data?.id,
+    });
+  }
+  console.log(resp);
+  visibleRoutes.value = routes.filter((item, index) => {
+    return (
+      item.meta?.isNavi &&
+      checkAccess(store.state.user.loginUser, item.meta?.access as string)
+    );
+  });
+};
 router.afterEach((to, from, failure) => {
   selectedKey.value = [to.path];
 });
@@ -72,9 +95,18 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
-let loginRef = ref();
+
 const doLogin = () => {
-  if (store.state.user.loginUser.access === Access.UN_LOGIN)
-    loginRef.value.handleClick();
+  if (store.state.user.loginUser.access === Access.UN_LOGIN) {
+    router.push({
+      path: "/login",
+    });
+  }
 };
+onMounted(() => {
+  initUser();
+  router.push({
+    path: "/",
+  });
+});
 </script>

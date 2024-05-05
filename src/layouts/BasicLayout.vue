@@ -1,6 +1,6 @@
 <template>
   <div id="basl">
-    <a-layout style="min-height: 100vh">
+    <a-layout style="height: 100vh">
       <a-layout-header class="header"> <GlobalHeader /> </a-layout-header>
       <a-layout-content class="content">
         <router-view />
@@ -14,15 +14,11 @@
   margin-bottom: 10px;
 }
 #basl .content {
-  background: linear-gradient(to right, #eee, #fff);
+  background: rgb(212, 210, 210);
   margin-bottom: 10px;
 }
 #basl .footer {
   background: #efefef;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   text-align: center;
 }
 </style>

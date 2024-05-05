@@ -1,6 +1,5 @@
 import Access from "./Access";
 import User from "@/types/User";
-
 export const checkAccess = (loginUser: User, access = Access.UN_LOGIN) => {
   const userAccess = loginUser.access;
   console.log(loginUser);
