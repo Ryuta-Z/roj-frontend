@@ -5,6 +5,8 @@
 import type { BaseResponse_boolean_ } from "../models/BaseResponse_boolean_";
 import type { BaseResponse_ContestVO_ } from "../models/BaseResponse_ContestVO_";
 import type { BaseResponse_List_ContestVO_ } from "../models/BaseResponse_List_ContestVO_";
+import type { BaseResponse_List_Participant_ } from "../models/BaseResponse_List_Participant_";
+import type { BaseResponse_List_ParticipantVO_ } from "../models/BaseResponse_List_ParticipantVO_";
 import type { BaseResponse_long_ } from "../models/BaseResponse_long_";
 import type { BaseResponse_Page_Contest_ } from "../models/BaseResponse_Page_Contest_";
 import type { BaseResponse_Page_TopCoderVO_ } from "../models/BaseResponse_Page_TopCoderVO_";
@@ -32,6 +34,33 @@ export class ContestControllerService {
       method: "POST",
       url: "/api/contest/add",
       body: contestAddRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
+   * cancelParticipate
+   * @param contestId
+   * @param userId
+   * @returns BaseResponse_boolean_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static cancelParticipateUsingPost(
+    contestId?: string,
+    userId?: string
+  ): CancelablePromise<BaseResponse_boolean_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/contest/cancelParticipate",
+      query: {
+        contestId: contestId,
+        userId: userId,
+      },
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,
@@ -71,6 +100,29 @@ export class ContestControllerService {
     return __request(OpenAPI, {
       method: "GET",
       url: "/api/contest/get/contestList",
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
+   * getParticipantList
+   * @param contestId contestId
+   * @returns BaseResponse_List_Participant_ OK
+   * @throws ApiError
+   */
+  public static getParticipantListUsingGet(
+    contestId?: number
+  ): CancelablePromise<BaseResponse_List_Participant_> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/contest/get/participantList",
+      query: {
+        contestId: contestId,
+      },
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,
@@ -128,8 +180,8 @@ export class ContestControllerService {
    * @throws ApiError
    */
   public static joinContestUsingPost(
-    contestId?: number,
-    userId?: number
+    contestId?: string,
+    userId?: string
   ): CancelablePromise<BaseResponse_long_ | any> {
     return __request(OpenAPI, {
       method: "POST",
@@ -160,6 +212,65 @@ export class ContestControllerService {
       method: "POST",
       url: "/api/contest/list/page",
       body: contestQueryRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
+   * listParticipantVO
+   * @param contestId contestId
+   * @returns BaseResponse_List_ParticipantVO_ OK
+   * @throws ApiError
+   */
+  public static listParticipantVoUsingGet(
+    contestId?: number
+  ): CancelablePromise<BaseResponse_List_ParticipantVO_> {
+    return __request(OpenAPI, {
+      method: "GET",
+      url: "/api/contest/list/vo",
+      query: {
+        contestId: contestId,
+      },
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`,
+      },
+    });
+  }
+
+  /**
+   * getScore
+   * @param contestId
+   * @param questionId
+   * @param questionName
+   * @param score
+   * @param userId
+   * @returns BaseResponse_boolean_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static getScoreUsingPut(
+    contestId?: number,
+    questionId?: number,
+    questionName?: string,
+    score?: number,
+    userId?: number
+  ): CancelablePromise<BaseResponse_boolean_ | any> {
+    return __request(OpenAPI, {
+      method: "PUT",
+      url: "/api/contest/score",
+      query: {
+        contestId: contestId,
+        questionId: questionId,
+        questionName: questionName,
+        score: score,
+        userId: userId,
+      },
       errors: {
         401: `Unauthorized`,
         403: `Forbidden`,

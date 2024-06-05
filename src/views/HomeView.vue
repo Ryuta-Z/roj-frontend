@@ -95,7 +95,6 @@
 import { onMounted, reactive, ref } from "vue";
 import { Message } from "@arco-design/web-vue";
 import { useRouter } from "vue-router";
-import BigNumber from "bignumber.js";
 import { IconSearch, IconRefresh } from "@arco-design/web-vue/es/icon";
 import { QuestionControllerService } from "@/api/roj-apis/questionApi";
 const router = useRouter();
@@ -168,7 +167,9 @@ const getQuestionList = async () => {
         title: item.title,
         tagList: item.tagList,
         rate:
-          item.acceptedNum == 0 ? 0 : (item.acceptedNum / item.submitNum) * 100,
+          item.acceptedNum == 0
+            ? 0
+            : Math.round((item.acceptedNum * 100) / item.submitNum),
         contestName: item.contestName,
       });
     });

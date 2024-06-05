@@ -46,7 +46,7 @@
             />
             <a-statistic
               title="通过率"
-              :value="user.acceptRate"
+              :value="user.acceptRate * 100"
               :precision="2"
               :value-style="{ color: '#0fbf60' }"
             >
@@ -68,6 +68,14 @@
                   :description="item.description"
                 >
                 </a-list-item-meta>
+                <template #actions>
+                  <a-space>
+                    <a-tag :color="getColor(item.status)">{{
+                      item.status == null ? "System Error" : item.status
+                    }}</a-tag>
+                    <a-tag>{{ item.language }}</a-tag>
+                  </a-space>
+                </template>
               </a-list-item>
             </a-list>
           </a-card>
@@ -79,6 +87,14 @@
                   :description="item.description"
                 >
                 </a-list-item-meta>
+                <template #actions>
+                  <a-space>
+                    <a-tag :color="getColor(item.status)">{{
+                      item.status == null ? "System Error" : item.status
+                    }}</a-tag>
+                    <a-tag>{{ item.language }}</a-tag>
+                  </a-space>
+                </template>
               </a-list-item>
             </a-list>
           </a-card>
@@ -127,6 +143,8 @@ const acc_list = reactive([
     id: "123",
     questionName: "A+B",
     description: "",
+    language: "",
+    status: "",
   },
 ]);
 const submit_list = reactive([
@@ -134,6 +152,8 @@ const submit_list = reactive([
     id: "123",
     questionName: "A+B",
     description: "",
+    language: "",
+    status: "",
   },
 ]);
 const colors = reactive([
@@ -150,6 +170,16 @@ const colors = reactive([
   "magenta",
   "gray",
 ]);
+const getColor = (item: string) => {
+  if (item != null) {
+    if (item != "Accepted") {
+      return "red";
+    } else {
+      return "green";
+    }
+  }
+  return undefined;
+};
 const getUserDetail = async () => {
   const resp = await JudgeControllerService.getUserPageVoUsingGet();
   if (resp.code == 0) {
@@ -158,24 +188,22 @@ const getUserDetail = async () => {
     acc_list.length = 0;
     submit_list.length = 0;
     resp.data?.latestAccept?.forEach((source) => {
-      var t1 = {
-        id: "",
-        contesnName: "",
-        description: "",
-      };
-      Object.assign(t1, source);
-      t1.description = source.createTime!;
-      acc_list.push(t1);
+      acc_list.push({
+        id: source.id!,
+        questionName: source.questionName!,
+        description: new Date(source.createTime!).toLocaleString(),
+        language: source.language!,
+        status: source.judgeInfo?.message,
+      });
     });
     resp.data?.latestSubmit?.forEach((source) => {
-      var t1 = {
-        id: "",
-        questionName: "",
-        description: "",
-      };
-      Object.assign(t1, source);
-      t1.description = source.createTime!;
-      submit_list.push(t1);
+      submit_list.push({
+        id: source.id!,
+        questionName: source.questionName!,
+        description: new Date(source.createTime!).toLocaleString(),
+        language: source.language!,
+        status: source.judgeInfo?.message,
+      });
     });
   } else Message.error(resp.message!);
 };

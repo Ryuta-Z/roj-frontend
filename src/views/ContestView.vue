@@ -13,20 +13,34 @@
               v-if="!contest.isParticipated && contest.status == 0"
               type="primary"
               size="mini"
+              @click="join(index)"
               >快速报名</a-button
             >
             <div v-else-if="contest.isParticipated" style="color: green">
               <IconCheckSquare />已报名
             </div>
+            <div v-else-if="contest.status == 1"><IconLoading />进行中</div>
           </template>
           <a-space>
             <a-countdown
+              v-if="contest.status == 0"
               title="距离开始还有"
-              :value="Date.parse(contest.startTime) + 1000 * 60 * 60 * 24"
+              :value="Date.parse(contest.startTime)"
               :now="now"
               format="D 天 H 时 m 分 s 秒"
             />
-            <a-button type="text" @click="goDetails(index)">
+            <a-countdown
+              v-if="contest.status == 1"
+              title="比赛剩余时间"
+              :value="Date.parse(contest.endTime)"
+              :now="now"
+              format="D 天 H 时 m 分 s 秒"
+            />
+            <a-button
+              v-if="contest.status == 0 || contest.isParticipated"
+              type="text"
+              @click="goDetails(index)"
+            >
               <template #icon>
                 <IconRight></IconRight>
               </template>
@@ -90,11 +104,12 @@ import {
   IconRight,
   IconCheckSquare,
   IconBarChart,
+  IconLoading,
 } from "@arco-design/web-vue/es/icon";
 import { useRouter } from "vue-router";
 import { ContestControllerService } from "@/api/roj-apis/contestApi";
 import { Message } from "@arco-design/web-vue";
-import user from "@/store/user";
+import { useStore } from "vuex";
 const router = useRouter();
 const now = Date.now();
 const contests = reactive([
@@ -102,6 +117,7 @@ const contests = reactive([
     id: "123",
     title: "contest",
     startTime: "",
+    endTime: "",
     isParticipated: true,
     status: 0,
   },
@@ -109,6 +125,7 @@ const contests = reactive([
     id: "123",
     title: "contest",
     startTime: "",
+    endTime: "",
     isParticipated: false,
     status: 0,
   },
@@ -116,6 +133,7 @@ const contests = reactive([
     id: "2324",
     title: "contest",
     startTime: "",
+    endTime: "",
     isParticipated: false,
     status: 0,
   },
@@ -194,6 +212,7 @@ const getContestList = async () => {
           time: "",
           isParticipated: false,
           startTime: "",
+          endTime: "",
           status: 0,
         };
         Object.assign(temp, source);
@@ -228,6 +247,19 @@ const topPlayer = async () => {
         users.push(user);
       }
     });
+  }
+};
+const store = useStore();
+const join = async (index: number) => {
+  const resp = await ContestControllerService.joinContestUsingPost(
+    contests[index].id as string,
+    store.state.user.loginUser.id as string
+  );
+  if (resp.code == 0) {
+    contests[index].isParticipated = true;
+    Message.success("报名成功!");
+  } else {
+    Message.error(resp.message!);
   }
 };
 onMounted(() => {

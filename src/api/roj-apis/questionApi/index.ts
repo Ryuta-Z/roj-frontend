@@ -8,6 +8,7 @@ export { OpenAPI } from './core/OpenAPI';
 export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { BaseResponse_boolean_ } from './models/BaseResponse_boolean_';
+export type { BaseResponse_List_QuestionVO_ } from './models/BaseResponse_List_QuestionVO_';
 export type { BaseResponse_long_ } from './models/BaseResponse_long_';
 export type { BaseResponse_Page_Question_ } from './models/BaseResponse_Page_Question_';
 export type { BaseResponse_Page_QuestionVO_ } from './models/BaseResponse_Page_QuestionVO_';

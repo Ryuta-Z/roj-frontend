@@ -47,8 +47,9 @@
             placeholder="请选择语言"
             allow-search
           >
-            <a-option>Java</a-option>
-            <a-option>C++</a-option>
+            <a-option value="java">Java</a-option>
+            <a-option value="cpp">C++</a-option>
+            <a-option value="c">C</a-option>
           </a-select>
         </a-space>
       </a-col>
@@ -111,7 +112,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 import Message from "@arco-design/web-vue/es/message";
-import BigNumber from "bignumber.js";
 import { JudgeControllerService } from "@/api/roj-apis/judgeApi";
 const pageIndex = {
   current: 0,
@@ -191,7 +191,7 @@ const getSubmitList = async () => {
         questionId: item.questionId,
         userId: item.userId,
         judgeInfo: item.judgeInfo,
-        createTime: item.createTime,
+        createTime: new Date(item.createTime).toLocaleString(),
         language: item.language,
       });
     });
@@ -224,7 +224,7 @@ const doSearch = async () => {
         questionId: item.questionId,
         userId: item.userId,
         judgeInfo: item.judgeInfo,
-        createTime: item.createTime,
+        createTime: new Date(item.createTime).toLocaleString(),
         language: item.language,
       });
     });

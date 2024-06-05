@@ -13,6 +13,7 @@ export type QuestionUpdateRequest = {
     id?: number;
     judgeCases?: Array<JudeCase>;
     judgeConfig?: JudgeConfig;
+    score?: number;
     submitNum?: number;
     tags?: Array<string>;
     title?: string;

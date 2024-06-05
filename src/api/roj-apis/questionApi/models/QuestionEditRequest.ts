@@ -13,6 +13,7 @@ export type QuestionEditRequest = {
     id?: number;
     judgeCases?: Array<JudeCase>;
     judgeConfig?: JudgeConfig;
+    score?: number;
     submitNum?: number;
     tags?: Array<string>;
     title?: string;

@@ -4,12 +4,12 @@
 /* eslint-disable */
 
 export type ContestVO = {
-  coderNum?: number;
-  description?: string;
-  endTime?: string;
-  id?: string;
-  participated?: boolean;
-  startTime?: string;
-  status?: number;
-  title?: string;
+    coderNum?: number;
+    description?: string;
+    endTime?: string;
+    id?: number;
+    participated?: boolean;
+    startTime?: string;
+    status?: number;
+    title?: string;
 };

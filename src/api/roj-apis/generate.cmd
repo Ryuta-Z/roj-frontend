@@ -8,7 +8,7 @@ REM 设置HTTP客户端（这里使用axios）
 set HTTP_CLIENT=axios
 
 REM 定义要生成的API类型数组
-set API_TYPES=user contest question judge sandbox
+set API_TYPES=user contest question judge sandbox post
 
 REM 遍历API类型数组
 for %%t in (%API_TYPES%) do (

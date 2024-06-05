@@ -8,7 +8,7 @@ export type QuestionQueryRequest = {
     contestName?: string;
     current?: number;
     end?: string;
-    id?: string;
+    id?: number;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;

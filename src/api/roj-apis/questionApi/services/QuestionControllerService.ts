@@ -3,6 +3,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BaseResponse_boolean_ } from '../models/BaseResponse_boolean_';
+import type { BaseResponse_List_QuestionVO_ } from '../models/BaseResponse_List_QuestionVO_';
 import type { BaseResponse_long_ } from '../models/BaseResponse_long_';
 import type { BaseResponse_Page_Question_ } from '../models/BaseResponse_Page_Question_';
 import type { BaseResponse_Page_QuestionVO_ } from '../models/BaseResponse_Page_QuestionVO_';
@@ -77,6 +78,29 @@ questionEditRequest: QuestionEditRequest,
             method: 'POST',
             url: '/api/question/edit',
             body: questionEditRequest,
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * getContestQuestionList
+     * @param contestId contestId
+     * @returns BaseResponse_List_QuestionVO_ OK
+     * @throws ApiError
+     */
+    public static getContestQuestionListUsingGet(
+contestId?: number,
+): CancelablePromise<BaseResponse_List_QuestionVO_> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/question/get/contestQuestions',
+            query: {
+                'contestId': contestId,
+            },
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,
@@ -166,6 +190,30 @@ questionQueryRequest: QuestionQueryRequest,
             method: 'POST',
             url: '/api/question/my/list/page/vo',
             body: questionQueryRequest,
+            errors: {
+                401: `Unauthorized`,
+                403: `Forbidden`,
+                404: `Not Found`,
+            },
+        });
+    }
+
+    /**
+     * publicQuestion
+     * @param id id
+     * @returns BaseResponse_long_ OK
+     * @returns any Created
+     * @throws ApiError
+     */
+    public static publicQuestionUsingPut(
+id?: number,
+): CancelablePromise<BaseResponse_long_ | any> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/api/question/put/publicQuestion',
+            query: {
+                'id': id,
+            },
             errors: {
                 401: `Unauthorized`,
                 403: `Forbidden`,

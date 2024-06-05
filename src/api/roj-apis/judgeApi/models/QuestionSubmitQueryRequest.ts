@@ -4,12 +4,12 @@
 /* eslint-disable */
 
 export type QuestionSubmitQueryRequest = {
-  current?: number;
-  language?: string;
-  pageSize?: number;
-  questionId?: string;
-  sortField?: string;
-  sortOrder?: string;
-  status?: string;
-  userId?: string;
+    current?: number;
+    language?: string;
+    pageSize?: number;
+    questionId?: number;
+    sortField?: string;
+    sortOrder?: string;
+    status?: string;
+    userId?: number;
 };

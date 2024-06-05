@@ -13,6 +13,7 @@
     "@bytemd/vue-next": "^1.21.0",
     "bignumber.js": "^9.1.2",
     "core-js": "^3.8.3",
+    "echarts": "^5.5.0",
     "json-bigint": "^1.0.0",
     "monaco-editor": "^0.45.0",
     "monaco-editor-webpack-plugin": "^7.1.0",

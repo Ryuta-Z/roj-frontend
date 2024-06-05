@@ -4,6 +4,7 @@
 /* eslint-disable */
 
 export type Contest = {
+    coderNum?: number;
     createTime?: string;
     description?: string;
     endTime?: string;

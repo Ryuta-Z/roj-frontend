@@ -35,8 +35,8 @@
 </template>
 <script setup lang="ts">
 import { IconGithub } from "@arco-design/web-vue/es/icon";
-const others = [0, 1, 2];
-const links = [3, 4, 5];
+const others = [0, 1];
+const links = [2, 3, 4];
 const Info = [
   {
     label: "前端技术栈",
@@ -44,23 +44,19 @@ const Info = [
   },
   {
     label: "后端技术栈",
-    value: "SpringBoot+MySQL+MyBatisPlus+Hutool+Knife4j",
+    value: "SpringBoot+MySQL+MyBatisPlus+Hutool+Knife4j+Docker",
   },
   {
-    label: "代码沙箱技术栈",
-    value: "SpringBoot+Docker",
-  },
-  {
-    label: "项目前端地址",
+    label: "项目前端(普通用户)地址",
     value: "https://github.com/Ryuta-Z/roj-frontend",
+  },
+  {
+    label: "项目前端(管理员)地址",
+    value: "https://github.com/Ryuta-Z/roj-frontend-admin",
   },
   {
     label: "项目后端地址",
     value: "https://github.com/Ryuta-Z/roj-backend",
-  },
-  {
-    label: "代码沙箱地址",
-    value: "https://github.com/Ryuta-Z/roj-sandbox",
   },
 ];
 </script>

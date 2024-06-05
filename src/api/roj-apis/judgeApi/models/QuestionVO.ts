@@ -10,6 +10,7 @@ export type QuestionVO = {
     acceptedNum?: number;
     content?: string;
     contestName?: string;
+    createTime?: string;
     id?: number;
     judgeCases?: Array<JudeCase>;
     judgeConfig?: JudgeConfig;
